@@ -1,6 +1,6 @@
 // https://github.com/Gillardo/bootstrap-ui-datetime-picker
 // Version: 1.0.21
-// Released: 2015-05-22 
+// Released: 2015-05-28 
 /**
  * Add parents() to jqLite.
  */
@@ -19,8 +19,25 @@ if (!angular.element.prototype.parents) {
 }
 
 angular.module('ui.bootstrap.datetimepicker', ['ui.bootstrap.dateparser', 'ui.bootstrap.position'])
-    .directive('datetimePicker', ['$compile', '$parse', '$document', '$timeout', '$position', 'dateFilter', 'dateParser', 'datepickerPopupConfig',
-        function ($compile, $parse, $document, $timeout, $position, dateFilter, dateParser, datepickerPopupConfig) {
+    .constant('uiDatepickerPopupConfig', {
+        datepickerPopup: 'yyyy-MM-dd',
+        html5Types: {
+            date: 'yyyy-MM-dd',
+            'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+            'month': 'yyyy-MM'
+        },
+        todayText: 'Today',
+        nowText: 'Now',
+        clearText: 'Clear',
+        closeText: 'Done',
+        dateText: 'Date',
+        timeText: 'Time',
+        closeOnDateSelection: true,
+        appendToBody: false,
+        showButtonBar: true
+    })
+    .directive('datetimePicker', ['$compile', '$parse', '$document', '$timeout', '$position', 'dateFilter', 'dateParser', 'uiDatepickerPopupConfig',
+        function ($compile, $parse, $document, $timeout, $position, dateFilter, dateParser, uiDatepickerPopupConfig) {
             return {
                 restrict: 'A',
                 require: 'ngModel',
@@ -38,10 +55,10 @@ angular.module('ui.bootstrap.datetimepicker', ['ui.bootstrap.dateparser', 'ui.bo
                 },
                 link: function (scope, element, attrs, ngModel) {
                     var dateFormat = 'dd MMM yyyy HH:mm:ss', currentDate,
-                        closeOnDateSelection = angular.isDefined(attrs.closeOnDateSelection) ? scope.$parent.$eval(attrs.closeOnDateSelection) : datepickerPopupConfig.closeOnDateSelection,
-                        appendToBody = angular.isDefined(attrs.datepickerAppendToBody) ? scope.$parent.$eval(attrs.datepickerAppendToBody) : datepickerPopupConfig.appendToBody;
+                        closeOnDateSelection = angular.isDefined(attrs.closeOnDateSelection) ? scope.$parent.$eval(attrs.closeOnDateSelection) : uiDatepickerPopupConfig.closeOnDateSelection,
+                        appendToBody = angular.isDefined(attrs.datepickerAppendToBody) ? scope.$parent.$eval(attrs.datepickerAppendToBody) : uiDatepickerPopupConfig.appendToBody;
 
-                    scope.showButtonBar = angular.isDefined(attrs.showButtonBar) ? scope.$parent.$eval(attrs.showButtonBar) : datepickerPopupConfig.showButtonBar;
+                    scope.showButtonBar = angular.isDefined(attrs.showButtonBar) ? scope.$parent.$eval(attrs.showButtonBar) : uiDatepickerPopupConfig.showButtonBar;
 
                     // determine which pickers should be available. Defaults to date and time
                     scope.enableDate = !(scope.enableDate == false);
@@ -59,11 +76,11 @@ angular.module('ui.bootstrap.datetimepicker', ['ui.bootstrap.dateparser', 'ui.bo
                     scope.timeText = scope.timeText || 'Time';
 
                     scope.getText = function (key) {
-                        return scope[key + 'Text'] || datepickerPopupConfig[key + 'Text'];
+                        return scope[key + 'Text'] || uiDatepickerPopupConfig[key + 'Text'];
                     };
 
                     attrs.$observe('datetimePicker', function (value) {
-                        dateFormat = value || datepickerPopupConfig.datepickerPopup;
+                        dateFormat = value || uiDatepickerPopupConfig.datepickerPopup;
                         ngModel.$render();
                     });
 
