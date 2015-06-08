@@ -17,12 +17,9 @@ if (!angular.element.prototype.parents) {
 
 angular.module('ui.bootstrap.datetimepicker', ['ui.bootstrap.dateparser', 'ui.bootstrap.position'])
     .constant('uiDatepickerPopupConfig', {
-        datepickerPopup: 'yyyy-MM-dd',
-        html5Types: {
-            date: 'yyyy-MM-dd',
-            'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
-            'month': 'yyyy-MM'
-        },
+        dateFormat: 'yyyy-MM-dd HH:mm',
+        enableDate: true,
+        enableTime: true,
         todayText: 'Today',
         nowText: 'Now',
         clearText: 'Clear',

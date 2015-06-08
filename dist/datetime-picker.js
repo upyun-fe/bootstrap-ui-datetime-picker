@@ -1,6 +1,6 @@
 // https://github.com/Gillardo/bootstrap-ui-datetime-picker
 // Version: 1.0.21
-// Released: 2015-05-28 
+// Released: 2015-06-08 
 /**
  * Add parents() to jqLite.
  */
@@ -20,12 +20,9 @@ if (!angular.element.prototype.parents) {
 
 angular.module('ui.bootstrap.datetimepicker', ['ui.bootstrap.dateparser', 'ui.bootstrap.position'])
     .constant('uiDatepickerPopupConfig', {
-        datepickerPopup: 'yyyy-MM-dd',
-        html5Types: {
-            date: 'yyyy-MM-dd',
-            'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
-            'month': 'yyyy-MM'
-        },
+        dateFormat: 'yyyy-MM-dd HH:mm',
+        enableDate: true,
+        enableTime: true,
         todayText: 'Today',
         nowText: 'Now',
         clearText: 'Clear',
